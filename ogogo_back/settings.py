@@ -26,6 +26,7 @@ INSTALLED_APPS = [
 
     # myapps
     'apps.users',
+    'apps.hospital',
 ]
 
 MIDDLEWARE = [
@@ -97,10 +98,6 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'EXCEPTION_HANDLER': 'middleware.handlers.custom_exception_handler',
-    'DEFAULT_RENDERER_CLASSES': [
-        'middleware.renderers.ResponseRenderer'
-    ],
-
 }
 
 # simple jwt
