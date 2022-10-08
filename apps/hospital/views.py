@@ -19,7 +19,8 @@ class HospitalView(viewsets.ReadOnlyModelViewSet):
 class HospitalUnitView(viewsets.ReadOnlyModelViewSet):
     queryset = HospitalUnit.objects.prefetch_related('workers').all()
     serializer_class = HospitalUnitListSerializer
-    filter_backends = ['hospital']
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['hospital']
 
     def get_serializer_class(self):
         if self.action == 'retrieve':
@@ -27,6 +28,9 @@ class HospitalUnitView(viewsets.ReadOnlyModelViewSet):
         return HospitalUnitListSerializer
 
 
-class WorkerView(viewsets.GenericViewSet, mixins.RetrieveModelMixin):
+class WorkerQueueView(viewsets.GenericViewSet, mixins.RetrieveModelMixin):
     queryset = User.objects.prefetch_related('hospitalunit_set').all()
     serializer_class = WorkerSerializer
+
+
+
