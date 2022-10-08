@@ -3,5 +3,4 @@ from . import views
 
 hospital_router = DefaultRouter()
 hospital_router.register(r'hospitals', views.HospitalView)
-hospital_router.register(r'hospital_units', views.HospitalView)
-hospital_router.register(r'workers', views.HospitalView)
+hospital_router.register(r'hospital_units', views.HospitalUnitView)
