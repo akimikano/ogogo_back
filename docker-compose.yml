@@ -24,3 +24,17 @@ services:
     depends_on:
       - db
     tty: true
+
+  bot:
+    build: ./
+    env_file:
+      - .env
+    restart: always
+    command: bash -c "python manage.py bot"
+    volumes:
+      - ./:/app
+    ports:
+      - "8010:8000"
+    depends_on:
+      - db
+    tty: true

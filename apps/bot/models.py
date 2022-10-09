@@ -33,8 +33,5 @@ class UserBot(models.Model):
     def get_user_and_created(cls, user_data):
         """ python-telegram-bot's Update, Context --> User instance """
         data = cls.init_kwargs(user_data)
-
         u, created = cls.objects.update_or_create(defaults=data, id=data['id'])
-
-        logger.info(f"User {u.tg_str} created: {created}")
         return u, created
