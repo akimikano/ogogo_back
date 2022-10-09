@@ -5,7 +5,7 @@ from telebot.types import (
 from telebot.util import update_types
 from typing import Union
 from loguru import logger
-# from apps.users.models import UserBot
+from apps.bot.models import UserBot
 
 
 class AuthMiddleware(BaseMiddleware):
@@ -16,17 +16,22 @@ class AuthMiddleware(BaseMiddleware):
 
     def pre_process(self, message: Union[Message, CallbackQuery], data):
         logger.debug(message.text)
-        # user_data = message.from_user.to_dict()
-        # message.u, message.is_created = UserBot.get_user_and_created(user_data)
-        # if isinstance(message, Message):
-        #     if '/start' in message.text:
-        #         parent = message.text.split()
-        #         if len(parent) == 2:
-        #             parent_id = parent[1]
-        #             if parent_id.isdigit() and message.is_created:
-        #                 message.u.parent = UserBot.objects.get_or_none(id=parent_id)
-        #                 message.u.save()
-        #                 data['parent'] = message.u.parent
+        user_data = message.from_user.to_dict()
+        message.u, message.is_created = UserBot.get_user_and_created(user_data)
+        if isinstance(message, Message):
+            if '/start' in message.text:
+                # id_profile = message.g()
+                # if not id_profile:
+                #     await message.answer("Запустите бота по ссылке с сайта.")
+                #     raise CancelHandler()
+
+                parent = message.text.split()
+                if len(parent) == 2:
+                    parent_id = parent[1]
+                    if parent_id.isdigit() and message.is_created:
+                        message.u.parent = UserBot.objects.get_or_none(id=parent_id)
+                        message.u.save()
+                        data['parent'] = message.u.parent
 
     def post_process(self, message: Message, data, exception):
         pass

@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', '37%!xab!8df6wl86d!h!&lu7e70%ai(jax7&t0&ubqm=%^nvxt')
 
 DEBUG = os.environ.get('DEBUG', True)
-
+CORS_ORIGIN_ALLOW_ALL = True
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [

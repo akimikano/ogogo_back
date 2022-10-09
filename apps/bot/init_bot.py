@@ -23,6 +23,3 @@ I am here to echo your kind words back to you. Just say anything nice and I'll s
 def echo_message(message):
     bot.reply_to(message, message.text)
 
-
-
-
