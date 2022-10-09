@@ -46,10 +46,22 @@ class WorkerView(viewsets.GenericViewSet):
         return Response({'success': True})
 
     @action(detail=True, methods=['get'])
-    def quit_queue(self, request):
+    def quit_queue(self, request, pk):
         worker = self.get_object()
         queue, _ = WorkerQueue.objects.get_or_create(worker=worker)
         queue.clients.remove(request.user)
+        return Response({'success': True})
+
+
+class ClientView(viewsets.GenericViewSet):
+    serializer_class = UserBasicSerializer
+    queryset = User.objects.all()
+
+    @action(detail=True, methods=['get'])
+    def block_client(self, request, pk):
+        client = self.get_object()
+        client.is_active = False
+        client.save()
         return Response({'success': True})
 
 

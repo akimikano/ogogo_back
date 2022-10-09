@@ -24,11 +24,18 @@ class UserBasicSerializer(serializers.ModelSerializer):
 class UserCreateSerializer(UserCreatePasswordRetypeSerializer):
     password = serializers.CharField(required=True, write_only=True)
     re_password = serializers.CharField(required=True, write_only=True)
-    # email = serializers.EmailField(required=True)
     first_name = serializers.CharField(required=True)
     last_name = serializers.CharField(required=True)
 
     class Meta:
         model = User
         fields = ('id', 'username', 'first_name', 'last_name', 'password', 're_password')
+
+
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            'id', 'username', 'first_name', 'last_name'
+        )
 
