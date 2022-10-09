@@ -11,6 +11,9 @@ from .serializers import *
 from rest_framework.generics import (
     CreateAPIView
 )
+from djoser.views import TokenCreateView
+from djoser.conf import settings
+from djoser import signals, utils
 
 
 class CreateTokenPairView(TokenObtainPairView):
@@ -43,6 +46,19 @@ class UserView(viewsets.GenericViewSet,
         headers = self.get_success_headers(serializer.data)
         token = Token.objects.create()
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+class CustomLogin(TokenCreateView):
+    def _action(self, serializer):
+        token = utils.login_user(self.request, serializer.user)
+        token_serializer_class = settings.SERIALIZERS.token
+        data = token_serializer_class(token).data
+        data.update({
+            'user_type': serializer.user.type
+        })
+        return Response(
+            data=data, status=status.HTTP_200_OK
+        )
 
 
 

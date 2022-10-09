@@ -12,7 +12,7 @@ class User(AbstractUser):
         ('client', 'Клиент')
     )
 
-    type = models.CharField('Тип', max_length=6, choices=USER_TYPES)
+    type = models.CharField('Тип', max_length=6, choices=USER_TYPES, default='client')
 
     objects = UserManager()
 
