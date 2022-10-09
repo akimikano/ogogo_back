@@ -19,8 +19,8 @@ services:
     command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./:/app
-      - /data/static:/app/static
-      - /data/media:/app/media
+      - /static:/app/static
+      - /media:/app/media
     ports:
       - "8001:8000"
     depends_on:
